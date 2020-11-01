@@ -35,6 +35,11 @@ ALLOWED_HOSTS = []
 SESSION_COOKIE_AGE = 86400
 CART_SESSION_ID = 'cart'
 
+# Email
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -117,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
