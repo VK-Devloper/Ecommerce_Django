@@ -20,14 +20,23 @@ def cart_detail(request):
         first_name = request.user.first_name
         last_name = request.user.last_name
         email = request.user.email
+        phone = request.user.userprofile.phone
+        address = request.user.userprofile.address
+        zipcode = request.user.userprofile.zipcode
+        place = request.user.userprofile.place
+
     else:
-        first_name = last_name = email = ''
+        first_name = last_name = email = phone = address = zipcode = place = ''
 
     context = {
         'cart': cart,
         'first_name': first_name,
         'last_name': last_name,
         'email': email,
+        'phone': phone,
+        'address': address,
+        'zipcode': zipcode,
+        'place': place,
         'pub_key': settings.STRIPE_API_KEY_PUBLISHABLE,
         'productstring': productstring
     }

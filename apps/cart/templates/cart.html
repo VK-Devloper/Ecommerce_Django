@@ -179,9 +179,10 @@
                 first_name: '{{ first_name }}',
                 last_name: '{{ last_name }}',
                 email: '{{ email }}',
-                address: '',
-                zipcode: '',
-                place: '',
+                address: '{{ address }}',
+                zipcode: '{{ zipcode }}',
+                place: '{{ place }}',
+                phone: '{{ phone }}',
                 products: [{{ productstring|safe }}],
                 coupon_value: 0,
                 coupon_code: '',
@@ -237,6 +238,7 @@
                     'address': this.address,
                     'zipcode': this.zipcode,
                     'place': this.place,
+                    'phone': this.phone,
                     'coupon_code': this.coupon_code
                 }
 
@@ -260,6 +262,10 @@
 
                 if(data.zipcode === '') {
                     this.errors.push('Zipcode is required.');
+                }
+
+                if(data.phone === '') {
+                    this.error.push('Phone is required.');
                 }
 
                 if(data.place === '') {

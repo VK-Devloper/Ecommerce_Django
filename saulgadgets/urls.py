@@ -24,11 +24,12 @@ from django.contrib.auth import views
 from apps.core.views import frontpage, contact, about
 from apps.store.views import product_detail, category_detail, search
 from apps.cart.views import cart_detail, success
+from apps.order.views import admin_order_pdf
 from apps.cart.webhook import webhook
 from apps.userprofile.views import signup, myaccount
 
 from apps.coupon.api import api_can_use
-from apps.store.api import api_add_to_cart, api_remove_from_cart, api_checkout, create_checkout_session
+from apps.store.api import api_add_to_cart, api_remove_from_cart, create_checkout_session
 from apps.newsletter.api import api_add_subscriber
 
 from .sitemaps import CategorySitemap, ProductSitemap, StaticViewSitemap
@@ -41,6 +42,7 @@ sitemaps = {
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('admin/admin_order_pdf/<int:order_id>/', admin_order_pdf, name='admin_order_pdf'),
     path('', frontpage, name='frontpage'),
     path('contact/', contact, name='contact'),
     path('about/', about, name='about'),
@@ -61,7 +63,7 @@ urlpatterns = [
     path('api/create_checkout_session/', create_checkout_session, name='create_checkout_session'),
     path('api/add_to_cart/', api_add_to_cart, name='api_add_to_cart'),
     path('api/remove_from_cart/', api_remove_from_cart, name='api_remove_from_cart'),
-    path('api/checkout/', api_checkout, name='api_checkout'),
+    # path('api/checkout/', api_checkout, name='api_checkout'),
     path('api/add_subscriber/', api_add_subscriber, name='api_add_subscriber'),
 
     path('api/can_use/', api_can_use, name='api_can_use'),
