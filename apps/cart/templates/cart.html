@@ -206,6 +206,40 @@
             }
         },
         methods: {
+            validateForm() {
+                this.errors = [];
+
+                if(this.first_name === '') {
+                    this.errors.push('First Name is required.');
+                }
+
+                if(this.last_name === '') {
+                    this.errors.push('Last Name is required.');
+                }
+
+                if(this.email === '') {
+                    this.errors.push('Email is required.');
+                }
+
+                if(this.address === '') {
+                    this.errors.push('Address is required.');
+                }
+
+                if(this.zipcode === '') {
+                    this.errors.push('Zipcode is required.');
+                }
+
+                if(this.phone === '') {
+                    this.error.push('Phone is required.');
+                }
+
+                if(this.place === '') {
+                    this.errors.push('Place is required.');
+                }
+
+                return this.error.length;
+            },
+
             applyCoupon() {
                 if(this.coupon_code != '') {
                     fetch('/api/can_use/?coupon_code=' + this.coupon_code, {
@@ -242,37 +276,7 @@
                     'coupon_code': this.coupon_code
                 }
 
-                this.errors = [];
-
-                if(data.first_name === '') {
-                    this.errors.push('First Name is required.');
-                }
-
-                if(data.last_name === '') {
-                    this.errors.push('Last Name is required.');
-                }
-
-                if(data.email === '') {
-                    this.errors.push('Email is required.');
-                }
-
-                if(data.address === '') {
-                    this.errors.push('Address is required.');
-                }
-
-                if(data.zipcode === '') {
-                    this.errors.push('Zipcode is required.');
-                }
-
-                if(data.phone === '') {
-                    this.error.push('Phone is required.');
-                }
-
-                if(data.place === '') {
-                    this.errors.push('Place is required.');
-                }
-
-                if(this.errors.length === 0 ) {
+                if(this.validateForm() === 0 ) {
 
                     var stripe = Stripe('{{ pub_key }}')
 

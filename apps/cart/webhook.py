@@ -5,13 +5,12 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
-from django.template.loader import render_to_string
-from django.core.mail import EmailMultiAlternatives
 
 from .cart import Cart
-from apps.order.views import render_to_pdf
 
 from apps.order.models import Order
+
+from apps.store.utilities import decrement_product_quantity, send_email_confirmation
 
 
 @csrf_exempt
@@ -37,29 +36,10 @@ def webhook(request):
         order.paid = True
         order.save()
 
-        for item in order.items.all():
-            product = item.product
-            product.num_available = product.num_available - item.quantity
-            product.save()
+        decrement_product_quantity(order)
 
         # Send mail with pdf
-
-        subject = 'Order confirmation'
-        from_email = 'noreply@saulgadgets.com'
-        to = ['vaibhavkotadiya27199@gmail.com', order.email]
-        text_content = 'Your order is successful!'
-        html_content = render_to_string('order_confirmation.html', {'order': order})
-
-        pdf = render_to_pdf('order_pdf.html', {'order': order})
-
-        msg = EmailMultiAlternatives(subject, text_content, from_email, to)
-        msg.attach_alternative(html_content, 'text/html')
-
-        if pdf:
-            name = 'order_%s.pdf' % order.id
-            msg.attach(name, pdf, 'application/pdf')
-
-        msg.send()
+        send_email_confirmation(order)
 
         # Send mail
 
